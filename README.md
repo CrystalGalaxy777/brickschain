@@ -22,4 +22,4 @@ Jeder Token = ein digitaler Anteil einer Immobilie.
 
 ### 1. Clone repository / Repository klonen / Клонировать репозиторий
 ```bash
-git clone <your-repo-url> && cd brickschain
+git clone https://github.com/CrystalGalaxy777/brickschain.git && cd brickschain
