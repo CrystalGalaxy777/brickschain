@@ -1,0 +1,11 @@
+{
+  "valid": true,
+  "height": 3,
+  "lastHash": "06d05f987b2119f84871e7604390df9f6a10d99579686dd7ba72109dd33b6c1c",
+  "balances": {
+    "0x111": 300,
+    "0xaaa": 300,
+    "0xbbb": 250,
+    "0xccc": 150
+  }
+}

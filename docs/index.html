@@ -1,0 +1,97 @@
+<!-- public/index.html — BricksChain dashboard                                  -->
+<!-- EN: Simple viewer for balances & chain status                              -->
+<!-- DE: Einfacher Viewer für Kontostände & Kettenstatus                        -->
+<!-- RU: Простой просмотрщик балансов и статуса цепочки                         -->
+<!doctype html>
+<html lang="en">
+<head>
+  <!-- EN: Basic meta & title / DE: Basis-Meta & Titel / RU: Базовые мета и заголовок -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>BricksChain — Real Estate Tokenization</title>
+  <style>
+    /* EN: Minimal clean styling / DE: Minimales, sauberes Styling / RU: Минималистичное стиль */
+    :root { font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial; }
+    body { margin: 24px; background: #0b0f14; color: #e6edf3; }
+    .wrap { max-width: 860px; margin: 0 auto; }
+    h1 { margin: 0 0 12px; font-size: 28px; }
+    .sub { color: #9fb3c8; margin-bottom: 24px; }
+    .card { background: #111826; border: 1px solid #1f2937; border-radius: 14px; padding: 16px; box-shadow: 0 1px 10px rgba(0,0,0,.25); }
+    table { width: 100%; border-collapse: collapse; margin-top: 8px; }
+    th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid #1f2937; }
+    th { color: #9fb3c8; font-weight: 600; }
+    .ok { color: #34d399; } /* EN: green / DE: grün / RU: зелёный */
+    .bad { color: #f87171; } /* EN: red   / DE: rot  / RU: красный */
+    .muted { color: #9fb3c8; font-size: 14px; }
+    .grid { display: grid; grid-template-columns: 1fr; gap: 16px; }
+    .footer { margin-top: 24px; color: #9fb3c8; font-size: 14px; }
+    code { background: #0f172a; padding: 2px 6px; border-radius: 6px; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>BricksChain</h1>
+    <div class="sub">EN: Real Estate Tokenization • DE: Tokenisierung von Immobilien • RU: Токенизация недвижимости</div>
+
+    <div class="grid">
+      <div class="card">
+        <div class="muted">EN: Chain status / DE: Kettenstatus / RU: Статус цепочки</div>
+        <div id="chainStatus">Loading…</div> <!-- EN/DE/RU: сюда подставим статус -->
+      </div>
+
+      <div class="card">
+        <div class="muted">EN: Final balances / DE: End-Kontostände / RU: Итоговые балансы</div>
+        <table id="balTable">
+          <thead><tr><th>Address</th><th>Balance</th></tr></thead>
+          <tbody><!-- EN/DE/RU: строки с адресами появятся здесь --></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="footer">
+      <div>EN/DE/RU: This page expects <code>state.json</code> next to it.</div>
+      <div>EN: We will generate it from Node in the next step. /
+           DE: Wir generieren es gleich per Node. /
+           RU: На следующем шаге сгенерируем через Node.</div>
+    </div>
+  </div>
+
+  <script>
+    // EN: Load balances & status from JSON                                   // DE: Balances & Status aus JSON laden                          // RU: Загружаем балансы и статус из JSON
+    // EN: If file is missing, show a friendly hint                           // DE: Falls Datei fehlt, freundlichen Hinweis anzeigen          // RU: Если файла нет — показать подсказку
+    async function loadData() {                                              // EN: Main loader / DE: Hauptlader / RU: Главный загрузчик
+      try {
+        // EN: Fetch snapshot (to be created next step)                       // DE: Snapshot laden (erzeugen wir gleich)                      // RU: Загружаем снапшот (создадим на след. шаге)
+        const res = await fetch('./state.json');                             // EN: Read local JSON / DE: Lokales JSON lesen / RU: Локальный JSON
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        const data = await res.json();                                       // EN: Parse / DE: Parsen / RU: Парсим
+
+        // EN: Expect shape: { balances: {addr:amount,...}, valid: true }    // DE: Erwartete Form: { balances: {...}, valid: true }         // RU: Ожидаем форму: { balances: {...}, valid: true }
+        const statusEl = document.getElementById('chainStatus');             // EN: Status node / DE: Status-Element / RU: Нода статуса
+        statusEl.innerHTML = data.valid
+          ? '<span class="ok">Chain valid</span>'
+          : '<span class="bad">Chain invalid</span>';                        // EN/DE/RU: статус валидности
+
+        const tbody = document.querySelector('#balTable tbody');             // EN: Table body / DE: Tabellenkörper / RU: Тело таблицы
+        tbody.innerHTML = '';                                                // EN: Clear / DE: Leeren / RU: Очистить
+
+        // EN: Render rows sorted by address                                  // DE: Zeilen nach Adresse sortieren                              // RU: Сортируем по адресу
+        Object.entries(data.balances).sort((a,b)=>a[0].localeCompare(b[0]))
+          .forEach(([addr, amount]) => {                                     // EN: Each pair / DE: Jedes Paar / RU: Каждая пара
+            const tr = document.createElement('tr');                          // EN: Row / DE: Zeile / RU: Строка
+            const tdA = document.createElement('td'); tdA.textContent = addr; // EN/DE/RU: адрес
+            const tdB = document.createElement('td'); tdB.textContent = amount; // EN/DE/RU: баланс
+            tr.appendChild(tdA); tr.appendChild(tdB); tbody.appendChild(tr);  // EN/DE/RU: вставить в таблицу
+          });
+
+      } catch (e) {
+        // EN: Friendly hint if JSON missing                                  // DE: Hinweis, falls JSON fehlt                                  // RU: Подсказка, если нет JSON
+        document.getElementById('chainStatus').innerHTML =
+          '<span class="bad">No state.json yet</span> — run the export step next.';
+        console.warn('state.json missing:', e);
+      }
+    }
+    loadData(); // EN/DE/RU: запуск загрузки
+  </script>
+</body>
+</html>
