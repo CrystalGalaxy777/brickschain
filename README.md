@@ -57,7 +57,6 @@ Example output:
 
 ---
 
-````markdown
 ### 3. Run multi-investor demo
 ```bash
 node demo-multi-investors.js
