@@ -56,3 +56,6 @@ chain.addBlock(b2);                                                             
 console.log('Owner balance:', chain.state.get(owner));                             // EN: Expect 800 / DE: Erwartet 800 / RU: Ожидаем 800
 console.log('Investor balance:', chain.state.get(investor));                       // EN: Expect 200 / DE: Erwartet 200 / RU: Ожидаем 200
 console.log('Chain valid?', chain.isValid());                                      // EN: Expect true / DE: true erwartet / RU: Ожидаем true
+// --- Final snapshot table ---
+console.log('\n=== Final balances snapshot ===');        // EN/DE/RU: заголовок
+console.table(chain.state.snapshot());                    // EN: Pretty-print / DE: Schön ausgeben / RU: Красиво печатаем
