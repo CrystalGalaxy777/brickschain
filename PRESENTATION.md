@@ -1,3 +1,12 @@
+Отлично 🙌 Тогда сделаем **мини-презентацию в стиле слайдов**: лаконично, три языка, легко вывести в PDF (например, через VS Code Markdown PDF или просто Ctrl+P → PDF).
+
+---
+
+## 📂 Файл `PRESENTATION.md`
+
+Создай в корне проекта файл `PRESENTATION.md` и вставь туда:
+
+```markdown
 # BricksChain
 
 **EN:** Final Project: Real Estate Tokenization  
@@ -33,3 +42,29 @@
 
 ## Output Example / Beispiel-Ausgabe / Пример вывода
 
+```
+
+Owner balance: 300
+A balance: 300
+B balance: 250
+C balance: 150
+Chain valid? true
+
+```
+
+---
+
+## Online Demo / Online-Demo / Онлайн-демо
+
+👉 https://CrystalGalaxy777.github.io/brickschain/  
+
+---
+
+## Next Steps / Nächste Schritte / Следующие шаги
+
+- **EN:** Extend to Solidity Smart Contract (ERC-20)  
+- **DE:** Erweiterung zu Solidity Smart Contract (ERC-20)  
+- **RU:** Расширение до смарт-контракта в Solidity (ERC-20)  
+```
+
+---
