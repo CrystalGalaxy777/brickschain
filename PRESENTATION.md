@@ -47,7 +47,7 @@ Chain valid? true
 
 ## Online Demo / Online-Demo / Онлайн-демо
 
-👉 https://CrystalGalaxy777.github.io/brickschain/  
+👉 https://CrystalGalaxy777.github.io/brickschain/
 
 ---
 
