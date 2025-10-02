@@ -56,6 +56,3 @@ Chain valid? true
 - **EN:** Extend to Solidity Smart Contract (ERC-20)  
 - **DE:** Erweiterung zu Solidity Smart Contract (ERC-20)  
 - **RU:** Расширение до смарт-контракта в Solidity (ERC-20)  
-```
-
----
